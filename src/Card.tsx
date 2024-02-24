@@ -60,8 +60,8 @@ export default function Card({canvasSize}: CardProps) {
         <Image
           image={logo}
           fit="contain"
-          x={10}
-          y={10}
+          x={15}
+          y={15}
           width={100}
           height={20}
         />
