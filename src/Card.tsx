@@ -1,38 +1,48 @@
 import React from 'react';
-import {Image, ImageBackground, StyleSheet, View} from 'react-native';
+import {
+  useImage,
+  Image,
+  RoundedRect,
+  Group,
+  rect,
+  rrect,
+} from '@shopify/react-native-skia';
 
-export default function Card() {
-  return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('./assets/background.png')}
-        style={styles.background}
-        imageStyle={styles.backgroundImage}>
-        <Image source={require('./assets/ck_logo.png')} style={styles.image} />
-      </ImageBackground>
-    </View>
-  );
+interface CardProps {
+  canvasSize: {width: number; height: number};
 }
 
-const styles = StyleSheet.create({
-  container: {
-    height: 250,
-    padding: 15,
-    backgroundColor: 'rgb(120, 55, 245)',
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  background: {
-    flex: 1,
-  },
-  backgroundImage: {
-    resizeMode: 'contain',
-    bottom: '-25%',
-    right: '-60%',
-  },
-  image: {
-    width: 100,
-    height: 20,
-    resizeMode: 'contain',
-  },
-});
+export default function Card({canvasSize}: CardProps) {
+  const background = useImage(require('./assets/background.png'));
+  const logo = useImage(require('./assets/ck_logo.png'));
+  const rct = rrect(rect(0, 0, canvasSize.width, canvasSize.height), 10, 10);
+
+  return (
+    <>
+      <RoundedRect
+        r={10}
+        width={canvasSize.width}
+        height={250}
+        color="rgb(120, 55, 245)"
+      />
+      <Group clip={rct}>
+        <Image
+          image={background}
+          x={75}
+          y={25}
+          width={canvasSize.width}
+          height={canvasSize.height}
+          fit="contain"
+        />
+        <Image
+          image={logo}
+          fit="contain"
+          x={10}
+          y={10}
+          width={100}
+          height={20}
+        />
+      </Group>
+    </>
+  );
+}
