@@ -6,26 +6,49 @@ import {
   Group,
   rect,
   rrect,
+  SweepGradient,
+  vec,
 } from '@shopify/react-native-skia';
 
 interface CardProps {
   canvasSize: {width: number; height: number};
 }
 
+const OUTER_BORDER_RADIUS = 10;
+const PADDING = 4;
+const INNER_BORDER_RADIUS = OUTER_BORDER_RADIUS - PADDING;
+
 export default function Card({canvasSize}: CardProps) {
   const background = useImage(require('./assets/background.png'));
   const logo = useImage(require('./assets/ck_logo.png'));
-  const rct = rrect(rect(0, 0, canvasSize.width, canvasSize.height), 10, 10);
+
+  const outerRct = rrect(
+    rect(0, 0, canvasSize.width, canvasSize.height),
+    OUTER_BORDER_RADIUS,
+    OUTER_BORDER_RADIUS,
+  );
+
+  const innerRct = rrect(
+    rect(
+      PADDING,
+      PADDING,
+      canvasSize.width - PADDING * 2,
+      canvasSize.height - PADDING * 2,
+    ),
+    INNER_BORDER_RADIUS,
+    INNER_BORDER_RADIUS,
+  );
 
   return (
     <>
-      <RoundedRect
-        r={10}
-        width={canvasSize.width}
-        height={250}
-        color="rgb(120, 55, 245)"
-      />
-      <Group clip={rct}>
+      <RoundedRect rect={outerRct}>
+        <SweepGradient
+          c={vec(canvasSize.width / 2, canvasSize.height / 2)}
+          colors={['cyan', 'magenta', 'cyan']}
+        />
+      </RoundedRect>
+      <RoundedRect rect={innerRct} />
+      <Group clip={innerRct}>
         <Image
           image={background}
           x={75}
