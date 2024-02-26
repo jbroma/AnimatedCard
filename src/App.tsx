@@ -3,7 +3,7 @@ import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import Card from './Card';
 import {Canvas} from '@shopify/react-native-skia';
 
-const CANVAS_HEIGHT = 250;
+const CANVAS_HEIGHT = 200;
 
 export default function App() {
   const {width: windowWidth} = useWindowDimensions();
