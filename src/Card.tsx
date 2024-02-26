@@ -8,33 +8,28 @@ import {
   rrect,
   SweepGradient,
   center,
+  Canvas,
 } from '@shopify/react-native-skia';
+import {Dimensions} from 'react-native';
 
-interface CardProps {
-  canvasSize: {width: number; height: number};
-}
-
+const WIDTH = Dimensions.get('window').width * 0.9;
+const HEIGHT = 200;
 const OUTER_BORDER_RADIUS = 10;
 const PADDING = 4;
 const INNER_BORDER_RADIUS = OUTER_BORDER_RADIUS - PADDING;
 
-export default function Card({canvasSize}: CardProps) {
+export default function Card() {
   const background = useImage(require('./assets/background.png'));
   const logo = useImage(require('./assets/ck_logo.png'));
 
   const outerRct = rrect(
-    rect(0, 0, canvasSize.width, canvasSize.height),
+    rect(0, 0, WIDTH, HEIGHT),
     OUTER_BORDER_RADIUS,
     OUTER_BORDER_RADIUS,
   );
 
   const innerRct = rrect(
-    rect(
-      PADDING,
-      PADDING,
-      canvasSize.width - PADDING * 2,
-      canvasSize.height - PADDING * 2,
-    ),
+    rect(PADDING, PADDING, WIDTH - PADDING * 2, HEIGHT - PADDING * 2),
     INNER_BORDER_RADIUS,
     INNER_BORDER_RADIUS,
   );
@@ -42,7 +37,7 @@ export default function Card({canvasSize}: CardProps) {
   const c = center(outerRct);
 
   return (
-    <>
+    <Canvas style={{width: WIDTH, height: HEIGHT}}>
       <RoundedRect rect={outerRct}>
         <SweepGradient c={c} colors={['cyan', 'magenta', 'cyan']} />
       </RoundedRect>
@@ -53,8 +48,8 @@ export default function Card({canvasSize}: CardProps) {
           fit="contain"
           x={75}
           y={25}
-          width={canvasSize.width}
-          height={canvasSize.height}
+          width={WIDTH}
+          height={HEIGHT}
         />
         <Image
           image={logo}
@@ -65,6 +60,6 @@ export default function Card({canvasSize}: CardProps) {
           height={20}
         />
       </Group>
-    </>
+    </Canvas>
   );
 }

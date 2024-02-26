@@ -1,18 +1,11 @@
 import React from 'react';
-import {StyleSheet, View, useWindowDimensions} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Card from './Card';
-import {Canvas} from '@shopify/react-native-skia';
-
-const CANVAS_HEIGHT = 200;
 
 export default function App() {
-  const {width: windowWidth} = useWindowDimensions();
-
   return (
     <View style={styles.container}>
-      <Canvas style={{width: windowWidth * 0.9, height: CANVAS_HEIGHT}}>
-        <Card canvasSize={{width: windowWidth * 0.9, height: CANVAS_HEIGHT}} />
-      </Canvas>
+      <Card />
     </View>
   );
 }
@@ -24,5 +17,6 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    gap: 10,
   },
 });
