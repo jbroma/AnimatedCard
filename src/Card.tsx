@@ -7,7 +7,7 @@ import {
   rect,
   rrect,
   SweepGradient,
-  vec,
+  center,
 } from '@shopify/react-native-skia';
 
 interface CardProps {
@@ -39,23 +39,22 @@ export default function Card({canvasSize}: CardProps) {
     INNER_BORDER_RADIUS,
   );
 
+  const c = center(outerRct);
+
   return (
     <>
       <RoundedRect rect={outerRct}>
-        <SweepGradient
-          c={vec(canvasSize.width / 2, canvasSize.height / 2)}
-          colors={['cyan', 'magenta', 'cyan']}
-        />
+        <SweepGradient c={c} colors={['cyan', 'magenta', 'cyan']} />
       </RoundedRect>
       <RoundedRect rect={innerRct} />
       <Group clip={innerRct}>
         <Image
           image={background}
+          fit="contain"
           x={75}
           y={25}
           width={canvasSize.width}
           height={canvasSize.height}
-          fit="contain"
         />
         <Image
           image={logo}
