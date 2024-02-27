@@ -1,13 +1,13 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import Card from './Card';
+import PanEnabledCard from './PanEnabledCard';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export default function App() {
   return (
     <GestureHandlerRootView style={styles.ghRoot}>
       <View style={styles.container}>
-        <Card />
+        <PanEnabledCard />
       </View>
     </GestureHandlerRootView>
   );

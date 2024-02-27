@@ -33,7 +33,7 @@ const INNER_BORDER_RADIUS = OUTER_BORDER_RADIUS - PADDING;
 
 const CF = 0.003;
 
-export default function Card() {
+export default function PanEnabledCard() {
   const rotateX = useSharedValue(0);
   const rotateY = useSharedValue(0);
   const gesture = Gesture.Pan()
