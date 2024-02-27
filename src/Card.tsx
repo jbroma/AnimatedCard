@@ -21,8 +21,8 @@ import {
 } from 'react-native-reanimated';
 
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT = 360;
-const HEIGHT_DIFF = 160;
+const HEIGHT = 300;
+const HEIGHT_DIFF = 100;
 
 const CARD_WIDTH = WIDTH * 0.9;
 const CARD_HEIGHT = HEIGHT - HEIGHT_DIFF;
@@ -31,7 +31,7 @@ const OUTER_BORDER_RADIUS = 10;
 const PADDING = 4;
 const INNER_BORDER_RADIUS = OUTER_BORDER_RADIUS - PADDING;
 
-const CF = 0.005;
+const CF = 0.003;
 
 export default function Card() {
   const rotateX = useSharedValue(0);
@@ -77,11 +77,22 @@ export default function Card() {
     {translate: [-c.x, -c.y]},
   ]);
 
+  // @ts-expect-error looks like typing bug in Skia
+  const gradientTransform: Transforms3d = useDerivedValue(() => [
+    {rotateZ: (rotateY.value + rotateX.value) * 2},
+    {rotateX: (rotateY.value + rotateX.value) * 5},
+    {rotateY: (rotateY.value + rotateX.value) * 5},
+  ]);
+
   return (
     <GestureDetector gesture={gesture}>
       <Canvas style={{width: WIDTH, height: HEIGHT}}>
         <RoundedRect rect={outerRct} transform={transform}>
-          <SweepGradient c={c} colors={['cyan', 'magenta', 'cyan']} />
+          <SweepGradient
+            c={c}
+            colors={['cyan', 'magenta', 'cyan']}
+            transform={gradientTransform}
+          />
         </RoundedRect>
         <RoundedRect rect={innerRct} transform={transform} />
         <Group clip={innerRct} transform={transform}>
